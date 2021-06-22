@@ -1,0 +1,45 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "servers_sql_db_target_server_name": {
+            "value": null
+        },
+        "virtualMachines_sql_srv_source_vm_name": {
+            "value": null
+        },
+        "virtualNetworks_sql_db_target_vnet_name": {
+            "value": null
+        },
+        "storageAccounts_sqlvaff4pgldcyol7e_name": {
+            "value": null
+        },
+        "bastionHosts_sql_srv_source_bastion_name": {
+            "value": null
+        },
+        "virtualNetworks_sql_srv_source_vnet_name": {
+            "value": null
+        },
+        "networkInterfaces_sql_srv_source_vm482_name": {
+            "value": null
+        },
+        "networkSecurityGroups_sql_srv_source_vm_nsg_name": {
+            "value": null
+        },
+        "sqlVirtualMachines_sql_srv_source_vm_name": {
+            "value": null
+        },
+        "privateEndpoints_sql_db_target_private_endpoint_name": {
+            "value": null
+        },
+        "privateDnsZones_privatelink_database_windows_net_name": {
+            "value": null
+        },
+        "publicIPAddresses_sql_srv_source_bastion_publicip_name": {
+            "value": null
+        },
+        "networkInterfaces_sql_db_target_private_endpoint_nic_3adb3beb_4108_4180_8799_9e0e4ddc1a5b_name": {
+            "value": null
+        }
+    }
+}
