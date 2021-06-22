@@ -1,0 +1,146 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "adminUsername": {
+            "type": "string",
+            "defaultValue": "AzureUser",
+            "metadata": {
+                "description": "ローカルの管理者名"
+            }
+        },
+        "adminPassword": {
+            "type": "securestring",
+            "metadata": {
+                "description": "ローカルの管理者のパスワード"
+            }
+        }
+    },
+    "variables": {
+        "location": "[resourceGroup().location]",
+
+        "sqlAuthenticationLogin": "SqlUser",
+        "sqlAuthenticationPassword": "Password.1!!",
+
+        "sqlCustomScriptFileName": "configure-sqlvm.ps1",
+        "sqlCustomScriptUri": "[concat('https://raw.githubusercontent.com/hiroyay-ms/Server-Migration-Hands-on-Lab/master/Hands-on%20lab/azure-templates/04-virtual-machines/', variables('sqlCustomScriptFileName'))]",
+        
+        "sqlVirtualMachineName": "SQL-SVR",
+        "sqlNetworkInterface": "[concat(variables('sqlVirtualMachineName'), '-NIC')]",
+        "virtualMachineSize": "Standard_D2s_v3"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2020-11-01",
+            "name": "[variables('sqlNetworkInterface')]",
+            "location": "[variables('location')]"
+        },
+
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2020-12-01",
+            "name": "[variables('sqlVirtualMachineName')]",
+            "location": "[variables('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/networkInterfaces/', variables('sqlNetworkInterface'))]"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[variables('virtualMachineSize')]"
+                },
+                "storageProfile": {
+                    "osDisk": {
+                        "createOption": "FromImage",
+                        "name": "[concat(variables('sqlVirtualMachineName'),'-osDisk')]",
+                        "caching": "None",
+                        "managedDisk": {
+                            "storageAccountType": "StandardSSD_LRS"
+                        }
+                    },
+                    "imageReference": {
+                        "publisher": "MicrosoftSQLServer",
+                        "offer": "SQL2012SP4-WS2012R2",
+                        "sku": "Standard",
+                        "version": "latest"
+                    }
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('sqlNetworkInterface'))]"
+                        }
+                    ]
+                },
+                "osProfile": {
+                    "computerName": "[variables('sqlVirtualMachineName')]",
+                    "adminUsername": "[parameters('adminUsername')]",
+                    "adminPassword": "[parameters('adminPassword')]",
+                    "windowsConfiguration": {
+                        "enableAutomaticUpdates": true,
+                        "provisionVMAgent": true
+                    }
+                }
+            },
+            "resources": [
+                {
+                    "type": "extensions",
+                    "apiVersion": "2020-12-01",
+                    "name": "SetupSqlVM",
+                    "location": "[variables('location')]",
+                    "dependsOn": [
+                        "[concat('Microsoft.Compute/virtualMachines/', variables('sqlVirtualMachineName'))]"
+                    ],
+                    "properties": {
+                        "publisher": "Microsoft.Compute",
+                        "type": "CustomScriptExtension",
+                        "typeHandlerVersion": "1.9",
+                        "autoUpgradeMinorVersion": true,
+                        "settings": {
+                            "fileUris": [
+                                "[variables('sqlCustomScriptUri')]"
+                            ],
+                            "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('sqlCustomScriptFileName'))]"
+                        }
+                    }
+                }
+            ]
+        },
+
+        {
+            "type": "Microsoft.SqlVirtualMachine/sqlVirtualMachines",
+            "apiVersion": "2017-03-01-preview",
+            "name": "[variables('sqlVirtualMachineName')]",
+            "location": "[variables('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachines',variables('sqlVirtualMachineName'))]"
+            ],
+            "properties": {
+                "virtualMachineResourceId": "[resourceId('Microsoft.Compute/virtualMachines',variables('sqlVirtualMachineName'))]",
+                "sqlManagement": "Full",
+                "sqlServerLicenseType": "PAYG",
+                "autoPatchingSettings": {
+                    "enable": false
+                },
+                "serverConfigurationsManagementSettings": {
+                    "sqlConnectivityUpdateSettings": {
+                        "connectivityType": "PRIVATE",
+                        "port": 1433,
+                        "sqlAuthUpdateUserName": "[variables('sqlAuthenticationLogin')]",
+                        "sqlAuthUpdatePassword": "[variables('sqlAuthenticationPassword')]"
+                    },
+                    "additionalFeaturesServerConfigurations": {
+                        "isRServicesEnabled": false
+                    }
+                }
+            }
+        }
+        
+    ],
+    "outputs": {
+        "adminUsername": {
+            "type": "string",
+            "value": "[parameters('adminUsername')]"
+        }
+    }    
+}
