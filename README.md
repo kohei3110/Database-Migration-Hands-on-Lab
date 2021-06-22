@@ -9,4 +9,4 @@
     - C ドライブ直下に _setup フォルダを作成
     - タイムゾーンを Tokyo Standard Time に設定
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fhiroyay-ms%2FServer-Migration-Hands-on-Lab%2Fitorita%2FHands-on%2520lab%2Fazure-templates%2F04-virtual-machines%2Fvm-deploy.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkohei3110%2FDatabase-Migration-Hands-on-Lab%2Ftemplates%2Fvm-deploy.json)
