@@ -11,7 +11,7 @@
         "virtualNetworks_sql_db_target_vnet_name": {
             "value": null
         },
-        "storageAccounts_sqlvaff4pgldcyol7e_name": {
+        "storageAccounts_sql-db-storage-account_name": {
             "value": null
         },
         "bastionHosts_sql_srv_source_bastion_name": {

@@ -14,8 +14,8 @@
             "defaultValue": "sql-db-target-vnet",
             "type": "String"
         },
-        "storageAccounts_sqlvaff4pgldcyol7e_name": {
-            "defaultValue": "sqlvaff4pgldcyol7e",
+        "storageAccounts_sql-db-storage-account_name": {
+            "defaultValue": "sql-db-storage-account",
             "type": "String"
         },
         "bastionHosts_sql_srv_source_bastion_name": {
@@ -183,7 +183,7 @@
         {
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2021-04-01",
-            "name": "[parameters('storageAccounts_sqlvaff4pgldcyol7e_name')]",
+            "name": "[parameters('storageAccounts_sql-db-storage-account_name')]",
             "location": "japaneast",
             "sku": {
                 "name": "Standard_LRS",
@@ -754,9 +754,9 @@
         {
             "type": "Microsoft.Storage/storageAccounts/blobServices",
             "apiVersion": "2021-04-01",
-            "name": "[concat(parameters('storageAccounts_sqlvaff4pgldcyol7e_name'), '/default')]",
+            "name": "[concat(parameters('storageAccounts_sql-db-storage-account_name'), '/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_sqlvaff4pgldcyol7e_name'))]"
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_sql-db-storage-account_name'))]"
             ],
             "sku": {
                 "name": "Standard_LRS",
@@ -774,9 +774,9 @@
         {
             "type": "Microsoft.Storage/storageAccounts/fileServices",
             "apiVersion": "2021-04-01",
-            "name": "[concat(parameters('storageAccounts_sqlvaff4pgldcyol7e_name'), '/default')]",
+            "name": "[concat(parameters('storageAccounts_sql-db-storage-account_name'), '/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_sqlvaff4pgldcyol7e_name'))]"
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_sql-db-storage-account_name'))]"
             ],
             "sku": {
                 "name": "Standard_LRS",
@@ -798,9 +798,9 @@
         {
             "type": "Microsoft.Storage/storageAccounts/queueServices",
             "apiVersion": "2021-04-01",
-            "name": "[concat(parameters('storageAccounts_sqlvaff4pgldcyol7e_name'), '/default')]",
+            "name": "[concat(parameters('storageAccounts_sql-db-storage-account_name'), '/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_sqlvaff4pgldcyol7e_name'))]"
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_sql-db-storage-account_name'))]"
             ],
             "properties": {
                 "cors": {
@@ -811,9 +811,9 @@
         {
             "type": "Microsoft.Storage/storageAccounts/tableServices",
             "apiVersion": "2021-04-01",
-            "name": "[concat(parameters('storageAccounts_sqlvaff4pgldcyol7e_name'), '/default')]",
+            "name": "[concat(parameters('storageAccounts_sql-db-storage-account_name'), '/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_sqlvaff4pgldcyol7e_name'))]"
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_sql-db-storage-account_name'))]"
             ],
             "properties": {
                 "cors": {
@@ -1180,10 +1180,10 @@
             "name": "[concat(parameters('servers_sql_db_target_server_name'), '/Default')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Sql/servers', parameters('servers_sql_db_target_server_name'))]",
-                "[resourceId('Microsoft.Storage/StorageAccounts', parameters('storageAccounts_sqlvaff4pgldcyol7e_name'))]"
+                "[resourceId('Microsoft.Storage/StorageAccounts', parameters('storageAccounts_sql-db-storage-account_name'))]"
             ],
             "properties": {
-                "storageContainerPath": "[concat('https://', parameters('storageAccounts_sqlvaff4pgldcyol7e_name'), '.blob.core.windows.net/vulnerability-assessment/')]",
+                "storageContainerPath": "[concat('https://', parameters('storageAccounts_sql-db-storage-account_name'), '.blob.core.windows.net/vulnerability-assessment/')]",
                 "recurringScans": {
                     "isEnabled": true,
                     "emailSubscriptionAdmins": true,
@@ -1194,10 +1194,10 @@
         {
             "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
             "apiVersion": "2021-04-01",
-            "name": "[concat(parameters('storageAccounts_sqlvaff4pgldcyol7e_name'), '/default/vulnerability-assessment')]",
+            "name": "[concat(parameters('storageAccounts_sql-db-storage-account_name'), '/default/vulnerability-assessment')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', parameters('storageAccounts_sqlvaff4pgldcyol7e_name'), 'default')]",
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_sqlvaff4pgldcyol7e_name'))]"
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', parameters('storageAccounts_sql-db-storage-account_name'), 'default')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_sql-db-storage-account_name'))]"
             ],
             "properties": {
                 "defaultEncryptionScope": "$account-encryption-key",
