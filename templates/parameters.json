@@ -38,7 +38,7 @@
         "publicIPAddresses_sql_srv_source_bastion_publicip_name": {
             "value": null
         },
-        "networkInterfaces_sql_db_target_private_endpoint_nic_3adb3beb_4108_4180_8799_9e0e4ddc1a5b_name": {
+        "networkInterfaces_sql_db_target_private_endpoint_nic_name": {
             "value": null
         }
     }
