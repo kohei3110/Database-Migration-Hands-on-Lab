@@ -50,8 +50,8 @@
             "defaultValue": "sql-srv-source-bastion-publicip",
             "type": "String"
         },
-        "networkInterfaces_sql_db_target_private_endpoint_nic_3adb3beb_4108_4180_8799_9e0e4ddc1a5b_name": {
-            "defaultValue": "sql-db-target-private-endpoint.nic.3adb3beb-4108-4180-8799-9e0e4ddc1a5b",
+        "networkInterfaces_sql_db_target_private_endpoint_nic_name": {
+            "defaultValue": "sql-db-target-private-endpoint.nic",
             "type": "String"
         }
     },
@@ -308,7 +308,7 @@
         {
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2020-11-01",
-            "name": "[parameters('networkInterfaces_sql_db_target_private_endpoint_nic_3adb3beb_4108_4180_8799_9e0e4ddc1a5b_name')]",
+            "name": "[parameters('networkInterfaces_sql_db_target_private_endpoint_nic_name')]",
             "location": "japaneast",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_sql_db_target_vnet_name'), 'sql-db-target-subnet')]"
