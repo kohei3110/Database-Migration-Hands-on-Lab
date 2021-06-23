@@ -15,7 +15,7 @@
             "type": "String"
         },
         "storageAccounts_sql-db-storage-account_name": {
-            "defaultValue": "sql-db-storage-account",
+            "defaultValue": "sqlDbStorageAccount",
             "type": "String"
         },
         "bastionHosts_sql_srv_source_bastion_name": {
